@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+
 type Props = {
   active: string
   onChange: (tab: string) => void
@@ -7,7 +9,7 @@ type Props = {
 
 export default function Tabs({ active, onChange }: Props) {
   const tabs = ["Overview", "Create"]
-
+  const [tab, setTab] = useState("Overview")
   return (
     <div style={{ display: "flex", gap: 20, marginTop: 20 }}>
       {tabs.map((tab) => (

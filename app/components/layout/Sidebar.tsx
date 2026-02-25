@@ -5,7 +5,7 @@ import { Box, List, ListItemButton, Typography } from "@mui/material"
 import { useState } from "react"
 import { House, Inbox, RefreshCcw } from "lucide-react"
 
-export default function AdminSidebar() {
+export default function Sidebar() {
   const [selectedKey, setSelectedKey] = useState("home")
   const { role, setRole } = useRole()
   const menuAdmin = [
