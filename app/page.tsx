@@ -1,64 +1,44 @@
-import Image from "next/image";
+"use client"
+
+import AdminSidebar from "./components/layout/Sidebar";
+import StatCard from "./components/dashboard/StatCard";
+import Tabs from "./components/dashboard/Tabs";
+import { useState } from "react";
+import ConcertCard from "./components/shared/ConcertCard";
+import { Award, CircleX, User } from "lucide-react";
 
 export default function Home() {
+  const [tab, setTab] = useState("Overview")
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <AdminSidebar />
+
+      <main style={{ flex: 1, padding: 20 }}>
+        <div style={{ display: "flex", gap: 20 }}>
+          <StatCard icon={<User size={40} className="mx-auto mb-1" />} title="Total of seats" value={500} color="#1e6f9f" />
+          <StatCard icon={<Award size={40} className="mx-auto mb-1" />} title="Reserve" value={120} color="#1abc9c" />
+          <StatCard icon={<CircleX size={40} className="mx-auto mb-1" />} title="Cancel" value={12} color="#e74c3c" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+
+        <Tabs active={tab} onChange={setTab} />
+        {tab === "Overview" && (
+          <>
+            <ConcertCard
+              name="Concert Name 1"
+              description="orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique odio non scelerisque venenatis. Donec rhoncus neque mauris, quis sodales lorem consectetur eu. Curabitur semper quam sit amet diam gravida, vel malesuada leo cursus. Maecenas eu neque vel tellus consectetur fermentum non vel erat. Donec arcu lectus, porttitor in lorem vel, dignissim euismod ex. In turpis augue, aliquet vel odio nec, dictum posuere arcu. Phasellus pellentesque enim enim, sit amet ultricies arcu ornare nec. Vivamus gravida gravida diam, eget feugiat ligula. Suspendisse potenti. Proin eleifend vel justo eget rhoncus. Donec faucibus neque lorem, a efficitur nunc tristique vulputate. Aenean lacinia leo eros. Proin et pretium nibh."
+              seats={500}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+            <ConcertCard
+              name="Concert Name 2"
+              description="Lorem ipsum dolor sit amet..."
+              seats={200}
+            />
+          </>
+        )}
+
+        {tab === "Create" && <div>Create form here</div>}
       </main>
     </div>
   );
