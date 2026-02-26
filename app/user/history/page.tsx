@@ -1,10 +1,10 @@
 "use client"
 
-import Sidebar from "@/app/components/layout/Sidebar"
-import HistoryTable from "@/app/components/history/HistoryTable"
+import Sidebar from "@/components/layout/Sidebar"
+import HistoryTable from "@/components/history/HistoryTable"
 import { useQuery } from "@tanstack/react-query"
-import { concertApi } from "@/app/api/concert.api"
-import { useRole } from "@/app/context/RoleContext"
+import { useRole } from "@/context/RoleContext"
+import { concertApi } from "@/api/concert.api"
 
 export default function UserHistoryPage() {
     const { role } = useRole()

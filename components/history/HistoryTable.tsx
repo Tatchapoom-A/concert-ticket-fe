@@ -10,7 +10,7 @@ import {
     TableContainer,
     Chip
 } from "@mui/material"
-import { History } from "@/app/types/history.type"
+import { History } from "@/types/history.type"
 
 type Props = {
     data: History[]

@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
-import { RoleProvider } from "./context/RoleContext"
+import { RoleProvider } from "../context/RoleContext"
 
 export default function Providers({
     children,

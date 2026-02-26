@@ -1,14 +1,14 @@
 "use client"
 
-import Sidebar from "./components/layout/Sidebar";
-import Tabs from "./components/dashboard/Tabs";
-import ConcertCard from "./components/shared/ConcertCard";
-import StatCardBar from "./components/dashboard/StatCardBar";
-import { useRole } from "./context/RoleContext";
+import Sidebar from "../components/layout/Sidebar";
+import Tabs from "../components/dashboard/Tabs";
+import ConcertCard from "../components/shared/ConcertCard";
+import StatCardBar from "../components/dashboard/StatCardBar";
+import { useRole } from "../context/RoleContext";
 import { useQuery } from "@tanstack/react-query";
-import { concertApi } from "./api/concert.api";
 import { useState } from "react";
-import CreateConcertForm from "./components/concert/CreateConcertForm";
+import CreateConcertForm from "../components/concert/CreateConcertForm";
+import { concertApi } from "@/api/concert.api";
 
 export default function Home() {
 

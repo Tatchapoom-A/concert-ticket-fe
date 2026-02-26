@@ -1,8 +1,8 @@
 import { Award, CircleX, User } from "lucide-react";
 import StatCard from "./StatCard";
-import { Concert } from "@/app/types/concert.type";
+import { Concert } from "@/types/concert.type";
 import { useQuery } from "@tanstack/react-query";
-import { concertApi } from "@/app/api/concert.api";
+import { concertApi } from "@/api/concert.api";
 
 type Props = {
     data: Concert[]

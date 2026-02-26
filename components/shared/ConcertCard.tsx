@@ -2,10 +2,10 @@ import { Box, Button, Typography } from "@mui/material"
 import { Trash2, User } from "lucide-react"
 import { useState } from "react"
 import ConfirmDeleteDialog from "../dialog/ConfirmDeleteDialog"
-import { concertApi } from "@/app/api/concert.api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Concert } from "@/app/types/concert.type"
-import { useRole } from "@/app/context/RoleContext"
+import { Concert } from "@/types/concert.type"
+import { useRole } from "@/context/RoleContext"
+import { concertApi } from "@/api/concert.api"
 
 type Props = {
   concerts: Concert[]
