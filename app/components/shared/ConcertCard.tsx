@@ -5,12 +5,15 @@ import ConfirmDeleteDialog from "../dialog/ConfirmDeleteDialog"
 import { concertApi } from "@/app/api/concert.api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Concert } from "@/app/types/concert.type"
+import { useRole } from "@/app/context/RoleContext"
 
 type Props = {
   concerts: Concert[]
+  forAdmin: boolean
 }
 
-export default function ConcertCard({ concerts }: Props) {
+export default function ConcertCard({ concerts, forAdmin }: Props) {
+  const { role } = useRole()
   const queryClient = useQueryClient()
   const [openDelete, setOpenDelete] = useState(false)
   const [selectedConcert, setSelectedConcert] = useState<Concert | null>(null)
@@ -26,6 +29,23 @@ export default function ConcertCard({ concerts }: Props) {
     onError: (error) => {
       console.error("Delete failed:", error)
       alert("Delete failed")
+    }
+  })
+
+  const reserveMutation = useMutation({
+    mutationFn: (
+      { ticketId, userId, action }: 
+      { ticketId: string, userId: string, action: string }
+    ) => concertApi.reservation(ticketId, userId, action),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["concerts"] })
+    },
+
+    onError: (error: any) => {
+      console.log(error);
+      const message = error?.response?.data?.message || "Reservation failed"
+      alert(message)
     }
   })
 
@@ -64,25 +84,41 @@ export default function ConcertCard({ concerts }: Props) {
               <User size={24} />
               <Typography>{card.totalOfSeat}</Typography>
             </Box>
+            {forAdmin === true && (
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ textTransform: 'none' }}
+                onClick={() => handleOpenDelete(card)}
+              >
+                <Trash2 size={18} className="mr-2" />
+                Delete
+              </Button>
+            )}
 
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ textTransform: 'none' }}
-              onClick={() => handleOpenDelete(card)}
-            >
-              <Trash2 size={18} className="mr-2" />
-              Delete
-            </Button>
+            {forAdmin === false && (
+              <Button
+                    variant="contained"
+                    color={card.isReserved ? "error" : "primary"}
+                    sx={{ textTransform: 'none' }}
+                    onClick={() => reserveMutation.mutate({
+                      ticketId: card?.id,
+                      userId: role?.userId ?? "",
+                      action: card.isReserved === true ? "CANCEL" : "RESERVE"
+                    })}
+                  >
+                    {card.isReserved ? "Cancel" : "Reserve"}
+                  </Button>
+            )}
           </Box>
+        </div>
+      ))}
           <ConfirmDeleteDialog
             open={openDelete}
             title={selectedConcert?.concertName ?? ""}
             onCancel={() => setOpenDelete(false)}
             onConfirm={handleConfirmDelete}
           />
-        </div>
-      ))}
     </>
   )
 }

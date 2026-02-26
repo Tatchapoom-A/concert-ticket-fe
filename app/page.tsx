@@ -7,15 +7,16 @@ import StatCardBar from "./components/dashboard/StatCardBar";
 import { useRole } from "./context/RoleContext";
 import { useQuery } from "@tanstack/react-query";
 import { concertApi } from "./api/concert.api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import CreateConcertForm from "./components/concert/CreateConcertForm";
 
 export default function Home() {
 
   const [tab, setTab] = useState("Overview")
   const { role } = useRole()
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["concerts", tab, role],
-    queryFn: () => concertApi.getAllConcert(),
+    queryFn: () => concertApi.getAllConcert(role?.userId ?? ""),
     staleTime: 0
   })
 
@@ -27,15 +28,14 @@ export default function Home() {
       <main style={{ flex: 1, padding: 20 }}>
         {role?.role === "Admin" ? (
           <>
-            <StatCardBar />
+            <StatCardBar data={data ?? []}/>
             <Tabs active={tab} onChange={setTab}/>
-            {tab === "Overview" && (<ConcertCard concerts={data ?? []}/>)}
-            {tab === "Create" && <div>Create form here</div>}
+            {tab === "Overview" && (<ConcertCard concerts={data ?? [] } forAdmin={true}/>)}
+            {tab === "Create" && <div><CreateConcertForm onChange={setTab}/></div>}
           </>
         ) : (
-          <ConcertCard concerts={data ?? []}/>
+          <ConcertCard forAdmin={false} concerts={data ?? []}/>
         )}
-
       </main>
     </div>
   );

@@ -4,4 +4,5 @@ export interface Concert {
   description: string
   totalOfSeat: number
   outOfTicket: boolean
+  isReserved: boolean
 }
