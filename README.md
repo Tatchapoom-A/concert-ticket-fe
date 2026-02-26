@@ -5,7 +5,7 @@
 ### How to run project
 - Run command `npm run dev`
 ### How to run unit tests
-- Run command `npm run test `
+- Run command `npm test `
 ## Architechture
 ### Feature-Based Architecture
 Focus on organizing folders by features
